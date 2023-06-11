@@ -1,10 +1,16 @@
 package org.ivanovx;
 
 import org.ivanovx.crawlers.BntCrawler;
+import org.ivanovx.crawlers.BtvCrawler;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootApplication
 public class Application implements ApplicationRunner {
@@ -26,6 +32,13 @@ public class Application implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        new BntCrawler().run();
+        List<Callable<String>> crawlers = List.of(
+                new BntCrawler(),
+                new BtvCrawler()
+        );
+
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            executor.invokeAll(crawlers);
+        }
     }
 }

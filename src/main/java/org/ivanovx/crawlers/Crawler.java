@@ -1,5 +1,7 @@
 package org.ivanovx.crawlers;
 
-public interface Crawler extends Runnable {
+import java.util.concurrent.Callable;
+
+public interface Crawler extends Callable<String> {
 
 }

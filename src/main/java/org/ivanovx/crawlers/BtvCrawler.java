@@ -1,35 +1,20 @@
 package org.ivanovx.crawlers;
 
 import org.ivanovx.DefaultHttpClient;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Callable;
 import java.util.stream.IntStream;
 
-public class BntCrawler implements Crawler {
-    private final static Logger logger = LoggerFactory.getLogger(BntCrawler.class);
+public class BtvCrawler implements Crawler {
+    private final static Logger logger = LoggerFactory.getLogger(BtvCrawler.class);
 
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
-    private final static String url = "https://bntnews.bg/bg/c/bulgaria?page=";
-
-    private LocalDateTime parseDate(String date) {
-        return LocalDateTime.parse(date, formatter);
-    }
-
-    private String getContent(String url) {
-        String htmlContent = DefaultHttpClient.GET(url);
-
-        Document document = Jsoup.parse(htmlContent);
-
-        return document.body().select(".txt-news").text();
-    }
+    private final static String url = "https://btvnovinite.bg/bulgaria?page=";
 
     @Override
     public String call() throws Exception {
@@ -42,16 +27,14 @@ public class BntCrawler implements Crawler {
 
                     document
                             .body()
-                            .select(".news-wrap-view > a")
+                            .select(".news-articles-inline .news-article-inline > a")
                             .stream()
                             .forEach(element -> {
-                                String date = element
-                                        .select(".news-time")
-                                        .text()
-                                        .replace("(обновена)", "")
-                                        .trim();
+                                String title = element
+                                        .select(".info-article > .title")
+                                        .text();
 
-                                logger.info(element.attr("title"));
+                                logger.info(title);
 
                                 //LocalDateTime fd = LocalDateTime.parse(date, formatter);
 
