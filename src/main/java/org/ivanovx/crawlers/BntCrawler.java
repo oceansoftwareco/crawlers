@@ -1,22 +1,15 @@
 package org.ivanovx.crawlers;
 
 import org.ivanovx.DefaultHttpClient;
-import org.ivanovx.crawlers.model.CrawlerOutputModel;
-import org.jsoup.Connection;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.lang.annotation.Documented;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.stream.IntStream;
 
-public class BntCrawler implements Runnable {
+public class BntCrawler implements Crawler {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
     private final static String url = "https://bntnews.bg/bg/c/bulgaria?page=";
@@ -41,9 +34,9 @@ public class BntCrawler implements Runnable {
                                         .replace("(обновена)", "")
                                         .trim();
 
-                                LocalDateTime fd = LocalDateTime.parse(date, formatter);
+                                //LocalDateTime fd = LocalDateTime.parse(date, formatter);
 
-                                CrawlerOutputModel model = new CrawlerOutputModel(
+                               /* CrawlerOutputModel model = new CrawlerOutputModel(
                                         element.attr("href"),
                                         fd,
                                         "BNT News",
@@ -51,9 +44,13 @@ public class BntCrawler implements Runnable {
                                         this.getContent(element.attr("href"))
                                 );
 
-                                System.out.println(model);
+                                System.out.println(model);*/
                             });
                 });
+    }
+
+    private LocalDateTime parseDate(String date) {
+        return LocalDateTime.parse(date, formatter);
     }
 
     private String getContent(String url) {
