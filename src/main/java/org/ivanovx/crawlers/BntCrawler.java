@@ -4,12 +4,17 @@ import org.ivanovx.DefaultHttpClient;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
 
 public class BntCrawler implements Crawler {
+
+    private final static Logger logger = LoggerFactory.getLogger(BntCrawler.class);
+
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
     private final static String url = "https://bntnews.bg/bg/c/bulgaria?page=";
@@ -33,6 +38,8 @@ public class BntCrawler implements Crawler {
                                         .text()
                                         .replace("(обновена)", "")
                                         .trim();
+
+                                logger.info(date);
 
                                 //LocalDateTime fd = LocalDateTime.parse(date, formatter);
 
