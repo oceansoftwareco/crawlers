@@ -8,7 +8,7 @@ public abstract class BaseCrawler implements Crawler {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public BaseCrawler(String url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

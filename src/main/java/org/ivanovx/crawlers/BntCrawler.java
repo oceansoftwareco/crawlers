@@ -3,6 +3,8 @@ package org.ivanovx.crawlers;
 import org.ivanovx.DefaultHttpClient;
 
 import org.ivanovx.models.News;
+import org.ivanovx.models.Source;
+import org.ivanovx.respositories.NewsRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -14,7 +16,7 @@ public class BntCrawler extends BaseCrawler {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
     public BntCrawler() {
-        super("https://bntnews.bg/bg/c/bulgaria?page=");
+        this.setUrl("https://bntnews.bg/bg/c/bulgaria?page=");
     }
 
     private LocalDateTime parseDate(String date) {
@@ -49,7 +51,15 @@ public class BntCrawler extends BaseCrawler {
                                         .replace("(обновена)", "")
                                         .trim();
 
-                                logger.info(element.attr("title"));
+                                News news = new News();
+
+                                news.setUrl(element.attr("href"));
+                                news.setTitle(element.attr("title"));
+                                news.setContent(this.getContent(element.attr("href")));
+                                news.setDate(this.parseDate(date));
+                                news.setSource(Source.BNT);
+
+                                System.out.println(news);
 
                                 //LocalDateTime fd = LocalDateTime.parse(date, formatter);
 

@@ -10,8 +10,12 @@ import java.util.stream.IntStream;
 public class BtvCrawler extends BaseCrawler {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
-    public BtvCrawler() {
+    /*public BtvCrawler() {
         super("https://btvnovinite.bg/bulgaria?page=");
+    }*/
+
+    public BtvCrawler() {
+        this.setUrl("https://btvnovinite.bg/bulgaria?page=");
     }
 
     @Override

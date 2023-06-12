@@ -36,8 +36,8 @@ public class Application implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         List<Crawler> crawlers = List.of(
-                new BntCrawler(),
-                new BtvCrawler()
+                new BntCrawler()
+                //new BtvCrawler()
         );
 
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
