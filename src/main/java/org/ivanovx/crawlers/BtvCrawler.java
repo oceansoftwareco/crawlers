@@ -3,25 +3,23 @@ package org.ivanovx.crawlers;
 import org.ivanovx.DefaultHttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
 
-public class BtvCrawler implements Crawler {
-    private final static Logger logger = LoggerFactory.getLogger(BtvCrawler.class);
-
+public class BtvCrawler extends BaseCrawler {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
-    private final static String url = "https://btvnovinite.bg/bulgaria?page=";
+    public BtvCrawler() {
+        super("https://btvnovinite.bg/bulgaria?page=");
+    }
 
     @Override
     public String call() throws Exception {
         IntStream
                 .range(1, 100)
                 .forEach(page -> {
-                    String htmlContent = DefaultHttpClient.GET(url + page);
+                    String htmlContent = DefaultHttpClient.GET(this.getUrl() + page);
 
                     Document document = Jsoup.parse(htmlContent);
 

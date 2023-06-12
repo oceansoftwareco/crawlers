@@ -2,22 +2,20 @@ package org.ivanovx.crawlers;
 
 import org.ivanovx.DefaultHttpClient;
 
+import org.ivanovx.models.News;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Callable;
 import java.util.stream.IntStream;
 
-public class BntCrawler implements Crawler {
-    private final static Logger logger = LoggerFactory.getLogger(BntCrawler.class);
-
+public class BntCrawler extends BaseCrawler {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
-    private final static String url = "https://bntnews.bg/bg/c/bulgaria?page=";
+    public BntCrawler() {
+        super("https://bntnews.bg/bg/c/bulgaria?page=");
+    }
 
     private LocalDateTime parseDate(String date) {
         return LocalDateTime.parse(date, formatter);
@@ -36,7 +34,7 @@ public class BntCrawler implements Crawler {
         IntStream
                 .range(1, 100)
                 .forEach(page -> {
-                    String htmlContent = DefaultHttpClient.GET(url + page);
+                    String htmlContent = DefaultHttpClient.GET(this.getUrl() + page);
 
                     Document document = Jsoup.parse(htmlContent);
 
