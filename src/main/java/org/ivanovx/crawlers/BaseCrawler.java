@@ -1,18 +1,19 @@
 package org.ivanovx.crawlers;
 
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class BaseCrawler implements Crawler {
-    private String url;
+
+    @Getter
+    private final String url;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+    public final static int PAGES = 10;
 
-    public String getUrl(){
-        return this.url;
+    public BaseCrawler(String url) {
+        this.url = url;
     }
 }

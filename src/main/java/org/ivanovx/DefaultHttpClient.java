@@ -1,5 +1,8 @@
 package org.ivanovx;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,7 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class DefaultHttpClient {
-    public static String GET(String url) {
+    public static Document GET(String url) {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest httpRequest = HttpRequest
@@ -26,6 +29,8 @@ public class DefaultHttpClient {
             throw new RuntimeException(e);
         }
 
-        return httpResponse.body();
+        String htmlContent = httpResponse.body();;
+
+        return Jsoup.parse(htmlContent);
     }
 }

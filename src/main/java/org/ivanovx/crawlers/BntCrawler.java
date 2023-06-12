@@ -10,13 +10,14 @@ import org.jsoup.nodes.Document;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class BntCrawler extends BaseCrawler {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
     public BntCrawler() {
-        this.setUrl("https://bntnews.bg/bg/c/bulgaria?page=");
+        super("https://bntnews.bg/bg/c/bulgaria?page=");
     }
 
     private LocalDateTime parseDate(String date) {
@@ -24,57 +25,50 @@ public class BntCrawler extends BaseCrawler {
     }
 
     private String getContent(String url) {
-        String htmlContent = DefaultHttpClient.GET(url);
+        Document document = DefaultHttpClient.GET(url);
 
-        Document document = Jsoup.parse(htmlContent);
+        String content = document
+                .body()
+                .select(".txt-news")
+                .text();
 
-        return document.body().select(".txt-news").text();
+        return content;
     }
 
     @Override
-    public String call() throws Exception {
-        IntStream
-                .range(1, 100)
-                .forEach(page -> {
-                    String htmlContent = DefaultHttpClient.GET(this.getUrl() + page);
+    public List<News> call() throws Exception {
+        List<News> collectedNews = IntStream.range(1, 10).mapToObj(page -> {
+            Document document = DefaultHttpClient.GET(this.getUrl() + page);
 
-                    Document document = Jsoup.parse(htmlContent);
+            List<News> newsList = document
+                    .body()
+                    .select(".news-wrap-view > a")
+                    .stream()
+                    .map(element -> {
+                        String date = element
+                                .select(".news-time")
+                                .text()
+                                .replace("(обновена)", "")
+                                .trim();
 
-                    document
-                            .body()
-                            .select(".news-wrap-view > a")
-                            .stream()
-                            .forEach(element -> {
-                                String date = element
-                                        .select(".news-time")
-                                        .text()
-                                        .replace("(обновена)", "")
-                                        .trim();
+                        News news = new News();
 
-                                News news = new News();
+                        news.setUrl(element.attr("href"));
+                        news.setTitle(element.attr("title"));
+                        news.setContent(this.getContent(element.attr("href")));
+                        news.setDate(this.parseDate(date));
+                        news.setSource(Source.BNT);
 
-                                news.setUrl(element.attr("href"));
-                                news.setTitle(element.attr("title"));
-                                news.setContent(this.getContent(element.attr("href")));
-                                news.setDate(this.parseDate(date));
-                                news.setSource(Source.BNT);
+                        this.logger.info(String.valueOf(news));
 
-                                System.out.println(news);
+                        return  news;
+                    }).toList();
 
-                                //LocalDateTime fd = LocalDateTime.parse(date, formatter);
+            return newsList;
+        }).flatMap(List::stream).toList();
 
-                               /* CrawlerOutputModel model = new CrawlerOutputModel(
-                                        element.attr("href"),
-                                        fd,
-                                        "BNT News",
-                                        element.attr("title"),
-                                        this.getContent(element.attr("href"))
-                                );
+        this.logger.info("Collected %s news".formatted(collectedNews.size()));
 
-                                System.out.println(model);*/
-                            });
-                });
-
-        return "Ok";
+        return collectedNews;
     }
 }

@@ -1,9 +1,6 @@
 package org.ivanovx.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +16,7 @@ public class News {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private String url;
