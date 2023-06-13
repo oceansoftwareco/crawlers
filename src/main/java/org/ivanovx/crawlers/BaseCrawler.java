@@ -11,7 +11,7 @@ public abstract class BaseCrawler implements Crawler {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public final static int PAGES = 10;
+    public final static int PAGES = 100;
 
     public BaseCrawler(String url) {
         this.url = url;

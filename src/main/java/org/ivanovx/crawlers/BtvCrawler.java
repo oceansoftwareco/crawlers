@@ -2,6 +2,7 @@ package org.ivanovx.crawlers;
 
 import org.ivanovx.DefaultHttpClient;
 import org.ivanovx.models.News;
+import org.ivanovx.models.Source;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -17,40 +18,56 @@ public class BtvCrawler extends BaseCrawler {
         super("https://btvnovinite.bg/bulgaria?page=");
     }
 
+    private String getContent(String url) {
+        Document document = DefaultHttpClient.GET(url);
+
+        String content = document
+                .body()
+                .select(".article-body")
+                .text();
+
+        return content;
+    }
+
     @Override
     public List<News> call() throws Exception {
-        IntStream
-                .range(1, PAGES)
-                .forEach(page -> {
-                    Document document = DefaultHttpClient.GET(this.getUrl() + page);
+        List<News> collectedNews = IntStream.range(1, PAGES).mapToObj(page -> {
+            Document document = DefaultHttpClient.GET(this.getUrl() + page);
 
-                    document
-                            .body()
-                            .select(".news-articles-inline .news-article-inline > a")
-                            .stream()
-                            .forEach(element -> {
-                                String title = element
-                                        .select(".info-article > .title")
-                                        .text();
+            List<News> newsList = document
+                    .body()
+                    .select(".news-articles-inline .news-article-inline > a")
+                    .stream()
+                    .map(element -> {
+                        String title = element
+                                .select(".info-article > .title")
+                                .text();
 
-                                logger.info(title);
+                        String date = element
+                                .select(".info-article > .date")
+                                .text();
 
-                                News news = new News();
+                        String url = "https://btvnovinite.bg/bulgaria" + element.attr("href");
 
-                                //LocalDateTime fd = LocalDateTime.parse(date, formatter);
+                        String content = this.getContent(url);
 
-                               /* CrawlerOutputModel model = new CrawlerOutputModel(
-                                        element.attr("href"),
-                                        fd,
-                                        "BNT News",
-                                        element.attr("title"),
-                                        this.getContent(element.attr("href"))
-                                );
+                        News news = new News();
 
-                                System.out.println(model);*/
-                            });
-                });
+                        news.setTitle(title);
+                        news.setContent(content);
+                        news.setSource(Source.BTV);
+                        news.setUrl(url);
 
-        return new ArrayList<News>();
+                        this.logger.info(String.valueOf(news));
+
+                        return news;
+                    }).toList();
+
+            return newsList;
+        }).flatMap(List::stream).toList();
+
+        this.logger.info("Collected %s news".formatted(collectedNews.size()));
+
+        return collectedNews;
     }
 }

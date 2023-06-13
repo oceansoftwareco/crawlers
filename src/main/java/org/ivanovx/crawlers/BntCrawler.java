@@ -37,7 +37,7 @@ public class BntCrawler extends BaseCrawler {
 
     @Override
     public List<News> call() throws Exception {
-        List<News> collectedNews = IntStream.range(1, 10).mapToObj(page -> {
+        List<News> collectedNews = IntStream.range(1, PAGES).mapToObj(page -> {
             Document document = DefaultHttpClient.GET(this.getUrl() + page);
 
             List<News> newsList = document
@@ -61,7 +61,7 @@ public class BntCrawler extends BaseCrawler {
 
                         this.logger.info(String.valueOf(news));
 
-                        return  news;
+                        return news;
                     }).toList();
 
             return newsList;
