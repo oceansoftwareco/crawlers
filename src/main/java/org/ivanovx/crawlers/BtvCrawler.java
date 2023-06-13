@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class BtvCrawler extends BaseCrawler {
-    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
+public class BtvCrawler implements Crawler {
+    private final String url = "https://btvnovinite.bg/bulgaria?page=";
 
-    public BtvCrawler() {
-        super("https://btvnovinite.bg/bulgaria?page=");
-    }
+    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
     private String getContent(String url) {
         Document document = DefaultHttpClient.GET(url);
@@ -31,8 +29,8 @@ public class BtvCrawler extends BaseCrawler {
 
     @Override
     public List<News> call() throws Exception {
-        List<News> collectedNews = IntStream.range(1, PAGES).mapToObj(page -> {
-            Document document = DefaultHttpClient.GET(this.getUrl() + page);
+        List<News> collectedNews = IntStream.range(1, 10).mapToObj(page -> {
+            Document document = DefaultHttpClient.GET(this.url + page);
 
             List<News> newsList = document
                     .body()
@@ -58,7 +56,7 @@ public class BtvCrawler extends BaseCrawler {
                         news.setSource(Source.BTV);
                         news.setUrl(url);
 
-                        this.logger.info(String.valueOf(news));
+                        //this.logger.info(String.valueOf(news));
 
                         return news;
                     }).toList();
@@ -66,7 +64,7 @@ public class BtvCrawler extends BaseCrawler {
             return newsList;
         }).flatMap(List::stream).toList();
 
-        this.logger.info("Collected %s news".formatted(collectedNews.size()));
+        //this.logger.info("Collected %s news".formatted(collectedNews.size()));
 
         return collectedNews;
     }

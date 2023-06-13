@@ -13,12 +13,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class BntCrawler extends BaseCrawler {
+public class BntCrawler implements Crawler {
+    private final String url = "https://bntnews.bg/bg/c/bulgaria?page=";
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
-
-    public BntCrawler() {
-        super("https://bntnews.bg/bg/c/bulgaria?page=");
-    }
 
     private LocalDateTime parseDate(String date) {
         return LocalDateTime.parse(date, formatter);
@@ -37,8 +34,8 @@ public class BntCrawler extends BaseCrawler {
 
     @Override
     public List<News> call() throws Exception {
-        List<News> collectedNews = IntStream.range(1, PAGES).mapToObj(page -> {
-            Document document = DefaultHttpClient.GET(this.getUrl() + page);
+        List<News> collectedNews = IntStream.range(1, 10).mapToObj(page -> {
+            Document document = DefaultHttpClient.GET(this.url + page);
 
             List<News> newsList = document
                     .body()
@@ -59,7 +56,7 @@ public class BntCrawler extends BaseCrawler {
                         news.setDate(this.parseDate(date));
                         news.setSource(Source.BNT);
 
-                        this.logger.info(String.valueOf(news));
+                       // this.logger.info(String.valueOf(news));
 
                         return news;
                     }).toList();
@@ -67,7 +64,7 @@ public class BntCrawler extends BaseCrawler {
             return newsList;
         }).flatMap(List::stream).toList();
 
-        this.logger.info("Collected %s news".formatted(collectedNews.size()));
+       // this.logger.info("Collected %s news".formatted(collectedNews.size()));
 
         return collectedNews;
     }
