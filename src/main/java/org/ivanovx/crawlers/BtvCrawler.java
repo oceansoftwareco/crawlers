@@ -3,16 +3,18 @@ package org.ivanovx.crawlers;
 import org.ivanovx.DefaultHttpClient;
 import org.ivanovx.models.News;
 import org.ivanovx.models.Source;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class BtvCrawler implements Crawler {
     private final String url = "https://btvnovinite.bg/bulgaria?page=";
+
+    private final Logger logger = LoggerFactory.getLogger(BtvCrawler.class);
 
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
@@ -21,7 +23,7 @@ public class BtvCrawler implements Crawler {
 
         String content = document
                 .body()
-                .select(".article-body")
+                .select(".article-body > .article-text-inner-wrapper > div")
                 .text();
 
         return content;
@@ -56,7 +58,7 @@ public class BtvCrawler implements Crawler {
                         news.setSource(Source.BTV);
                         news.setUrl(url);
 
-                        //this.logger.info(String.valueOf(news));
+                        this.logger.info(String.valueOf(news));
 
                         return news;
                     }).toList();

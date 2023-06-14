@@ -4,9 +4,9 @@ import org.ivanovx.DefaultHttpClient;
 
 import org.ivanovx.models.News;
 import org.ivanovx.models.Source;
-import org.ivanovx.respositories.NewsRepository;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,10 +14,11 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class BntCrawler implements Crawler {
-    private final String url = "https://bntnews.bg/bg/c/bulgaria?page=";
-    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
+    private final Logger logger = LoggerFactory.getLogger(BntCrawler.class);
 
     private LocalDateTime parseDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
+
         return LocalDateTime.parse(date, formatter);
     }
 
@@ -34,8 +35,8 @@ public class BntCrawler implements Crawler {
 
     @Override
     public List<News> call() throws Exception {
-        List<News> collectedNews = IntStream.range(1, 10).mapToObj(page -> {
-            Document document = DefaultHttpClient.GET(this.url + page);
+        List<News> collectedNews = IntStream.range(1, 20).mapToObj(page -> {
+            Document document = DefaultHttpClient.GET("https://bntnews.bg/bg/c/bulgaria?page=" + page);
 
             List<News> newsList = document
                     .body()
@@ -48,15 +49,18 @@ public class BntCrawler implements Crawler {
                                 .replace("(обновена)", "")
                                 .trim();
 
+                        String url = element.attr("href");
+                        String title = element.attr("title");
+
                         News news = new News();
 
-                        news.setUrl(element.attr("href"));
-                        news.setTitle(element.attr("title"));
-                        news.setContent(this.getContent(element.attr("href")));
+                        news.setUrl(url);
+                        news.setTitle(title);
+                        news.setContent(this.getContent(url));
                         news.setDate(this.parseDate(date));
                         news.setSource(Source.BNT);
 
-                       // this.logger.info(String.valueOf(news));
+                        this.logger.info(String.valueOf(news));
 
                         return news;
                     }).toList();
@@ -64,7 +68,7 @@ public class BntCrawler implements Crawler {
             return newsList;
         }).flatMap(List::stream).toList();
 
-       // this.logger.info("Collected %s news".formatted(collectedNews.size()));
+        this.logger.info("Collected %s news".formatted(collectedNews.size()));
 
         return collectedNews;
     }

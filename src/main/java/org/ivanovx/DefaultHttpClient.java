@@ -9,13 +9,17 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static java.net.http.HttpClient.Version;
+
 public class DefaultHttpClient {
     public static Document GET(String url) {
-        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpClient httpClient = HttpClient
+                .newBuilder()
+                .version(Version.HTTP_1_1)
+                .build();
 
         HttpRequest httpRequest = HttpRequest
                 .newBuilder(URI.create(url))
-                .version(HttpClient.Version.HTTP_1_1)
                 .GET()
                 .build();
 
@@ -23,9 +27,7 @@ public class DefaultHttpClient {
 
         try {
             httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
 
