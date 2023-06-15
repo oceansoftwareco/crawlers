@@ -7,19 +7,18 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class News {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class News extends BaseEntity {
+    @Column(nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(nullable = false)
     private String url;
 
     private LocalDateTime date;
 
+    @ManyToOne
     private Source source;
 }

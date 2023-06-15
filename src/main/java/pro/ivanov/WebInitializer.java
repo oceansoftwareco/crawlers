@@ -16,7 +16,7 @@ public class WebInitializer implements WebApplicationInitializer {
 	     
 		 ctx.register(WebInitializer.class);  
 	     ctx.setServletContext(container);
-	     ctx.setConfigLocation("pro.ivanov");
+		 ctx.setConfigLocation("pro.ivanov");
 
 		 Dynamic registration = container.addServlet("DispatcherServlet", new DispatcherServlet(ctx));
 		 
