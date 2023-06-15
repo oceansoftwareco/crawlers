@@ -6,10 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pro.ivanov.entity.News;
 import pro.ivanov.repository.NewsRepository;
 
 @Controller
+@RequestMapping("/")
 public class NewsController {
 
     private final NewsRepository newsRepository;
@@ -18,7 +20,7 @@ public class NewsController {
         this.newsRepository = newsRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String index(Pageable pageable, Model model) {
         Page<News> page = this.newsRepository.findAll(pageable);
 
@@ -29,7 +31,7 @@ public class NewsController {
         return "index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public String news(@PathVariable long id, Model model) {
         News news = this.newsRepository.findById(id).orElseThrow();
 
