@@ -1,6 +1,5 @@
 package pro.ivanov;
 
-import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -44,10 +43,10 @@ public class JpaConfig {
         return factory;
     }
 
-    @Bean
+   /* @Bean
     public EntityManager entityManager() {
         return this.entityManagerFactory().getObject().createEntityManager();
-    }
+    }*/
 
     @Bean
     public PlatformTransactionManager transactionManager() {
