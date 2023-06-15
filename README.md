@@ -1,2 +1,0 @@
-# crawlers
-Basic crawlers demo
