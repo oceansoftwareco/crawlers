@@ -22,7 +22,7 @@ public class JpaConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/myDb");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/newsDb");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
 
