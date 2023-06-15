@@ -16,7 +16,6 @@ public class ArchiveController {
         this.newsRepository = newsRepository;
     }
 
-
     @GetMapping("/{day}/{month}/{year}")
     public String index(
             @PathVariable int day,

@@ -6,14 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="beb73d65-b352-47b5-9465-3bb4db7553c1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/DefaultHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/DefaultHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/controllers/NewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/controllers/NewsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/crawlers/BntCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/crawlers/BntCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/crawlers/BtvCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/crawlers/BtvCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/news.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/news.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/controllers/ArchiveController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/controllers/ArchiveController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ivanovx/respositories/NewsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ivanovx/respositories/NewsRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +27,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -99,7 +99,9 @@
       <workItem from="1686732081023" duration="2361000" />
       <workItem from="1686745164015" duration="1255000" />
       <workItem from="1686751866638" duration="4674000" />
-      <workItem from="1686769736042" duration="1656000" />
+      <workItem from="1686769736042" duration="2278000" />
+      <workItem from="1686813870146" duration="1470000" />
+      <workItem from="1686822230381" duration="1669000" />
     </task>
     <servers />
   </component>

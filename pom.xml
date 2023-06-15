@@ -74,9 +74,6 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <compilerArguments>
-                        <arg>--enable-preview</arg>
-                    </compilerArguments>
                 </configuration>
             </plugin>
         </plugins>
