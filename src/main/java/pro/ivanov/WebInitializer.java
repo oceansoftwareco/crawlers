@@ -14,7 +14,7 @@ public class WebInitializer implements WebApplicationInitializer {
 	 public void onStartup(ServletContext container) throws ServletException {
 		 AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();  
 	     
-		 ctx.register(WebInitializer.class);  
+		 ctx.register(WebInitializer.class);
 	     ctx.setServletContext(container);
 		 ctx.setConfigLocation("pro.ivanov");
 

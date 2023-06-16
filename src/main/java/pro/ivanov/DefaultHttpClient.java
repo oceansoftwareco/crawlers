@@ -31,7 +31,7 @@ public class DefaultHttpClient {
             throw new RuntimeException(e);
         }
 
-        String htmlContent = httpResponse.body();;
+        String htmlContent = httpResponse.body();
 
         return Jsoup.parse(htmlContent);
     }
