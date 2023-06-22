@@ -15,6 +15,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 import java.util.List;
 
+// TODO
+// https://github.com/bgjug/jprime/blob/master/src/main/java/site/app/Application.java
 @Configuration
 @EnableWebMvc
 @ComponentScan
