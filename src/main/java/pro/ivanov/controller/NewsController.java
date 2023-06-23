@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pro.ivanov.entity.News;
 import pro.ivanov.repository.NewsRepository;
+import pro.ivanov.util.DefaultDateTime;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -25,11 +26,11 @@ public class NewsController {
         this.newsRepository = newsRepository;
     }
 
-    @GetMapping
-    public String index(Pageable pageable, Model model) {
-        LocalDate today = LocalDate.now();
+    @GetMapping("{date}")
+    public String index(@PathVariable String date, Pageable pageable, Model model) {
+        LocalDate value = LocalDate.parse(date, DefaultDateTime.defaultFormatter());
 
-        Page<News> page = this.newsRepository.findAllByDate(today, pageable);
+        Page<News> page = this.newsRepository.findAllByDate(value, pageable);
 
         model.addAttribute("previousPage", page.previousOrFirstPageable());
         model.addAttribute("page", page);
@@ -38,12 +39,12 @@ public class NewsController {
         return "index";
     }
 
-    @GetMapping("{id}")
+   /* @GetMapping("{id}")
     public String news(@PathVariable long id, Model model) {
         News news = this.newsRepository.findById(id).orElseThrow();
 
         model.addAttribute("news", news);
 
         return "news";
-    }
+    }*/
 }
