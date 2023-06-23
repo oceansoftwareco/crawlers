@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import pro.ivanov.util.DefaultHttpClient;
 import pro.ivanov.entity.News;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -56,7 +58,9 @@ public class BntCrawler implements Callable<List<News>> {
                         news.setUrl(url);
                         news.setTitle(title);
                         news.setContent(this.getContent(url));
-                        news.setDate(this.parseDate(date));
+                        news.setDate(LocalDate.now());
+                        //news.setDateTime(LocalDateTime.now());
+                       // news.setDate(this.parseDate(date));
                         //news.setSource(Source.BNT);
 
                         this.logger.info(String.valueOf(news));

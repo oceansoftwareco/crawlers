@@ -29,9 +29,7 @@ public class OnStartup implements ApplicationListener<ContextRefreshedEvent> {
             var task = service.submit(new BntCrawler());
 
             this.newsRepository.saveAll(task.get());
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }*/
     }

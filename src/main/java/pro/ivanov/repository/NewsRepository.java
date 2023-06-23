@@ -8,8 +8,15 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import pro.ivanov.entity.News;
 
+import java.time.LocalDate;
+import java.util.List;
+
 
 @Repository
 public interface NewsRepository extends PagingAndSortingRepository<News, Long>, JpaRepository<News, Long> {
     Page<News> findAll(Pageable pageable);
+
+    List<News> findAllByDate(LocalDate date);
+
+    Page<News> findAllByDate(LocalDate date, Pageable pageable);
 }

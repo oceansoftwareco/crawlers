@@ -7,8 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pro.ivanov.entity.News;
 import pro.ivanov.repository.NewsRepository;
+
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
 
 @Controller
 @RequestMapping("/news")
@@ -21,7 +27,9 @@ public class NewsController {
 
     @GetMapping
     public String index(Pageable pageable, Model model) {
-        Page<News> page = this.newsRepository.findAll(pageable);
+        LocalDate today = LocalDate.now();
+
+        Page<News> page = this.newsRepository.findAllByDate(today, pageable);
 
         model.addAttribute("previousPage", page.previousOrFirstPageable());
         model.addAttribute("page", page);
