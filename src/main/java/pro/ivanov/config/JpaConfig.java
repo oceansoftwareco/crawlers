@@ -1,4 +1,4 @@
-package pro.ivanov;
+package pro.ivanov.config;
 
 import javax.sql.DataSource;
 
@@ -15,7 +15,7 @@ import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories("pro.ivanov.repository")
 public class JpaConfig {
 
     @Bean

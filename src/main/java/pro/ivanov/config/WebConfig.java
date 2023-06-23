@@ -1,4 +1,4 @@
-package pro.ivanov;
+package pro.ivanov.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
-@ComponentScan
+@ComponentScan("pro.ivanov")
 @EnableWebMvc
 @EnableAsync
 @EnableSpringDataWebSupport
