@@ -3,7 +3,7 @@ package pro.ivanov.crawler;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.ivanov.DefaultHttpClient;
+import pro.ivanov.util.DefaultHttpClient;
 import pro.ivanov.entity.News;
 
 import java.time.LocalDateTime;

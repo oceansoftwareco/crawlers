@@ -8,7 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import pro.ivanov.entity.News;
 
-import java.util.Optional;
 
 @Repository
 public interface NewsRepository extends PagingAndSortingRepository<News, Long>, JpaRepository<News, Long> {

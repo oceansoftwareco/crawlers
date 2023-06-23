@@ -1,4 +1,4 @@
-package pro.ivanov;
+package pro.ivanov.util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -11,9 +11,8 @@ import pro.ivanov.entity.News;
 import pro.ivanov.repository.NewsRepository;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/news")
 public class NewsController {
-
     private final NewsRepository newsRepository;
 
     public NewsController(NewsRepository newsRepository) {

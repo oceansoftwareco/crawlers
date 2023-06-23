@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 @Component
 public class OnStartup implements ApplicationListener<ContextRefreshedEvent> {
-    private final Logger logger = LoggerFactory.getLogger(OnStartup.class);
+    //private final Logger logger = LoggerFactory.getLogger(OnStartup.class);
 
     private final NewsRepository newsRepository;
 
@@ -25,7 +25,7 @@ public class OnStartup implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
+        /*try (ExecutorService service = Executors.newSingleThreadExecutor()) {
             var task = service.submit(new BntCrawler());
 
             this.newsRepository.saveAll(task.get());
@@ -33,6 +33,6 @@ public class OnStartup implements ApplicationListener<ContextRefreshedEvent> {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }
