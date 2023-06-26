@@ -14,8 +14,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("pro.ivanov")
 @EnableSpringDataWebSupport
+@ComponentScan("pro.ivanov")
 public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public ViewResolver viewResolver() {

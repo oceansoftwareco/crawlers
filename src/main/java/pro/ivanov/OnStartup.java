@@ -49,7 +49,7 @@ public class OnStartup implements ApplicationListener<ContextRefreshedEvent> {
                 Future<CrawlerResult> task = new BntCrawler();
             }
         });*/
-        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
+        /*try (ExecutorService service = Executors.newSingleThreadExecutor()) {
             Future<CrawlerResult> bntTask = service.submit(new BntCrawler());
 
             List<News> needToSaveNews = bntTask.get().news();
@@ -60,6 +60,6 @@ public class OnStartup implements ApplicationListener<ContextRefreshedEvent> {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }
