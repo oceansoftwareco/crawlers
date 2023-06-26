@@ -2,6 +2,7 @@ package pro.ivanov.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import pro.ivanov.util.DefaultDateTime;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -26,25 +28,21 @@ public class NewsController {
         this.newsRepository = newsRepository;
     }
 
-    @GetMapping("{date}")
-    public String index(@PathVariable String date, Pageable pageable, Model model) {
+    @GetMapping("/{date}")
+    public String index(
+            @PathVariable String date,
+            @PageableDefault(size = 6) Pageable pageable,
+            Model model
+    ) {
         LocalDate value = LocalDate.parse(date, DefaultDateTime.defaultFormatter());
 
         Page<News> page = this.newsRepository.findAllByDate(value, pageable);
 
+        model.addAttribute("date", value.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
         model.addAttribute("previousPage", page.previousOrFirstPageable());
         model.addAttribute("page", page);
         model.addAttribute("nextPage", page.nextOrLastPageable());
 
         return "index";
     }
-
-   /* @GetMapping("{id}")
-    public String news(@PathVariable long id, Model model) {
-        News news = this.newsRepository.findById(id).orElseThrow();
-
-        model.addAttribute("news", news);
-
-        return "news";
-    }*/
 }
