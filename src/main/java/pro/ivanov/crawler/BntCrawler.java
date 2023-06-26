@@ -36,7 +36,7 @@ public class BntCrawler implements Callable<CrawlerResult> {
 
     @Override
     public CrawlerResult call() {
-        List<News> collectedNews = IntStream.range(1, 50).mapToObj(page -> {
+        List<News> collectedNews = IntStream.range(1, 5).mapToObj(page -> {
             Document document = DefaultHttpClient.GET("https://bntnews.bg/bg/c/bulgaria?page=" + page);
 
             List<News> newsList = document

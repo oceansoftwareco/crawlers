@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -20,6 +21,47 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class JpaConfig {
 
     @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://db:5432/newsDb");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("postgres");
+
+        return dataSource;
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        EclipseLinkJpaVendorAdapter vendorAdapter = new EclipseLinkJpaVendorAdapter();
+
+        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setDatabase(Database.POSTGRESQL);
+        vendorAdapter.setShowSql(true);
+
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setDataSource(this.dataSource());
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("pro.ivanov.entity");
+
+        return factory;
+    }
+
+    @Bean
+    public EntityManager entityManager() {
+        return this.entityManagerFactory().getObject().createEntityManager();
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+
+        return jpaTransactionManager;
+    }
+
+   /* @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -58,5 +100,5 @@ public class JpaConfig {
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
         return jpaTransactionManager;
-    }
+    }*/
 }
