@@ -17,6 +17,12 @@ import java.util.stream.IntStream;
 public class BntCrawler implements Callable<CrawlerResult> {
     //private final Logger logger = LoggerFactory.getLogger(BntCrawler.class);
 
+    private final int pageSize;
+
+    public BntCrawler(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     private LocalDateTime parseDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd.MM.yyyy");
 
@@ -36,7 +42,7 @@ public class BntCrawler implements Callable<CrawlerResult> {
 
     @Override
     public CrawlerResult call() {
-        List<News> collectedNews = IntStream.range(1, 5).mapToObj(page -> {
+        List<News> collectedNews = IntStream.range(1, this.pageSize).mapToObj(page -> {
             Document document = DefaultHttpClient.GET("https://bntnews.bg/bg/c/bulgaria?page=" + page);
 
             List<News> newsList = document
@@ -71,6 +77,8 @@ public class BntCrawler implements Callable<CrawlerResult> {
                     }).toList();
 
             return newsList;
+
+
         }).flatMap(List::stream).toList();
 
         //this.logger.info("Collected %s news".formatted(collectedNews.size()));

@@ -16,7 +16,10 @@ import java.util.List;
 public interface NewsRepository extends PagingAndSortingRepository<News, Long>, JpaRepository<News, Long> {
     Page<News> findAll(Pageable pageable);
 
+    // TODO: findAllByDateAndSourceId
     List<News> findAllByDate(LocalDate date);
 
     Page<News> findAllByDate(LocalDate date, Pageable pageable);
+
+    boolean existsByTitleAndDate(String title, LocalDate date);
 }

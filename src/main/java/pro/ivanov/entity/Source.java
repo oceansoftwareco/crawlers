@@ -1,6 +1,5 @@
 package pro.ivanov.entity;
 
-import jakarta.enterprise.inject.New;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

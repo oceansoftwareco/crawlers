@@ -1,7 +1,7 @@
 package pro.ivanov.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.PastOrPresent;
+//import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 
 import java.time.LocalDateTime;

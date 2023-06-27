@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>News</title>
+        <title>Новини</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     </head>
@@ -29,7 +29,7 @@
             </div>
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="?page=${previousPage.pageNumber}">Предишна</a></li>
-                <c:forEach var="page" begin="1" end="${page.totalPages - 1}">
+                <c:forEach var="page" begin="1" end="${page.totalPages}">
                     <li class="page-item">
                         <a class="page-link" href="?page=${page}">${page}</a>
                     </li>
